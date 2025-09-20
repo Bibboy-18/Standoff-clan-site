@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Набор в клан — Standoff 2</title>
+  <meta name="description" content="Набор в клан Standoff 2 — присоединяйся к активной команде!"/>
+  <style>
+    /* --- Базовые стили --- */
+    :root{
+      --accent:#ff4757;
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      font-family:Inter,Segoe UI,Roboto,system-ui,-apple-system,"Helvetica Neue",Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#071025 0%, #0f1724 100%);color:#e6eef6;min-height:100vh}
+    .container{max-width:1100px;margin:0 auto;padding:28px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo .badge{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#ff7b6b);display:flex;align-items:center;justify-content:center;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+    h1{margin:0;font-size:22px}
+    nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600}
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;margin-top:28px;align-items:center}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:20px;border-radius:14px;box-shadow:0 6px 20px rgba(2,6,23,.6)}
+    .hero-left h2{font-size:34px;margin:0 0 10px}
+    .hero-left p{color:var(--muted);line-height:1.5;margin:0 0 14px}
+    .btn{display:inline-block;padding:12px 18px;border-radius:10px;background:var(--accent);color:white;text-decoration:none;font-weight:700}
+    .features{display:flex;gap:14px;margin-top:18px}
+    .feat{flex:1;padding:14px;border-radius:12px;background:rgba(255,255,255,0.02);text-align:center}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+    .gallery img{width:100%;height:140px;object-fit:cover;border-radius:10px}
+    .rules ul{color:var(--muted);padding-left:18px}
+    form label{display:block;margin-top:10px;color:var(--muted);font-weight:600}
+    input,textarea,select{width:100%;padding:10px;margin-top:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.05);background:transparent;color:inherit}
+    footer{margin-top:30px;text-align:center;color:var(--muted);font-size:13px}
+    /* responsive */
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr; padding-bottom:10px}
+      .grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:520px){
+      .grid{grid-template-columns:1fr}
+      nav{display:none}
+    }
+    .pill{display:inline-block;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:999px;color:var(--muted);font-weight:700;margin-right:8px}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <div class="badge">ST</div>
+        <div>
+          <h1>Standoff Clan — набор</h1>
+          <div class="muted">Активный клан, тренировки и турниры</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#about">О клане</a>
+        <a href="#rules">Правила</a>
+        <a href="#gallery">Галерея</a>
+        <a href="#join" class="btn">Подать заявку</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="card hero-left">
+        <h2 id="heroTitle">Вступай в наш клан Standoff 2</h2>
+        <p id="heroText">Мы — дружная команда любителей и про-игроков. Регулярные туры, тренировки, обучение новичков и тёплая атмосфера.</p>
+        <div class="features">
+          <div class="feat"><strong>Тренировки</strong><div class="muted">2 раза в неделю</div></div>
+          <div class="feat"><strong>Турниры</strong><div class="muted">Участие в локальных</div></div>
+          <div class="feat"><strong>Поддержка</strong><div class="muted">Разбор демо</div></div>
+        </div>
+
+        <div style="margin-top:16px">
+          <a class="btn" href="#join">Подать заявку</a>
+          <a class="pill" href="#rules">Условия</a>
+          <a class="pill" href="#gallery">Галерея</a>
+        </div>
+
+        <div style="margin-top:16px" class="muted">Админ: <a id="adminLink" href="admin.html" style="color:inherit;text-decoration:underline">войти</a></div>
+      </div>
+
+      <aside class="card">
+        <div style="text-align:center">
+          <div style="font-weight:800;font-size:18px;margin-bottom:6px" id="slotInfo">Набор открыт — 12/50 слотов</div>
+          <div class="muted" id="nextEvent">Ближайшая тренировка: чт, 21:00 (по МСК)</div>
+        </div>
+
+        <div style="margin-top:14px">
+          <h3 style="margin:0 0 8px">Быстрая заявка</h3>
+          <form id="quickForm" onsubmit="return submitQuick();">
+            <label>Ник в игре</label><input required id="qNick" placeholder="Твой ник">
+            <label>Роль</label>
+            <select id="qRole">
+              <option>AWPer</option><option>Rusher</option><option>Support</option><option>Подхожу везде</option>
+            </select>
+            <label>Ссылка на профиль (ссылка)</label><input id="qProfile" placeholder="https://...">
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <button class="btn" type="submit">Отправить</button>
+              <button type="button" onclick="saveSample()" style="padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)">Сохранить локально</button>
+            </div>
+          </form>
+        </div>
+
+        <div style="margin-top:14px">
+          <h4 style="margin:0 0 6px">Контакты</h4>
+          <div class="muted">Discord: <strong>discord.gg/your</strong></div>
+          <div class="muted">Telegram: <strong>@yourtg</strong></div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="about" style="margin-top:20px" class="card">
+      <h3>О клане</h3>
+      <p id="aboutText" class="muted">Мы собираем игроков разного уровня: от новичков до про. У нас дружелюбное сообщество и структурированный рост.</p>
+      <div class="grid" style="margin-top:12px">
+        <div class="card">
+          <h4 style="margin-top:0">Тренеры</h4>
+          <p class="muted">Опытные игроки проводят разборы и тренировки.</p>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0">Раунды</h4>
+          <p class="muted">Сквадовые тренировки и клановые матчи.</p>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0">Культура</h4>
+          <p class="muted">Без токсичности — только уважение и прогресс.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="rules" class="card rules" style="margin-top:18px">
+      <h3>Правила клана</h3>
+      <ul id="rulesList">
+        <li>Уважать товарищей и админов.</li>
+        <li>Не использовать читы.</li>
+        <li>Активность — минимум 2 тренировки в месяц.</li>
+      </ul>
+    </section>
+
+    <section id="gallery" class="card" style="margin-top:18px">
+      <h3>Галерея</h3>
+      <div class="grid gallery" id="galleryGrid">
+        <img src="https://via.placeholder.com/600x400?text=Match+1" alt="">
+        <img src="https://via.placeholder.com/600x400?text=Match+2" alt="">
+        <img src="https://via.placeholder.com/600x400?text=Training" alt="">
+      </div>
+    </section>
+
+    <section id="join" class="card" style="margin-top:18px">
+      <h3>Подать полную заявку</h3>
+      <p class="muted">Заполни форму — заявка придёт на почту лидерам и сохранится локально.</p>
+      <form id="fullForm" onsubmit="return submitFull();">
+        <label>Ник в игре</label><input id="fNick" required>
+        <label>Возраст</label><input id="fAge" type="number" min="10">
+        <label>Роль</label><input id="fRole">
+        <label>Кратко о себе</label><textarea id="fAbout" rows="4"></textarea>
+        <label>Ссылка на профиль</label><input id="fProfile" placeholder="https://">
+        <div style="display:flex;gap:10px;margin-top:12px">
+          <button class="btn" type="submit">Отправить заявку</button>
+          <button type="button" onclick="downloadApps()" style="padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)">Скачать локальные заявки</button>
+        </div>
+      </form>
+    </section>
+
+    <footer>
+      © <span id="copyYear"></span> Standoff Clan • Сделано под рекламу — готово к промо
+    </footer>
+  </div>
+
+<script>
+  // Настройка: при развертывании поменяй этот email на реальный для mailto
+  const ADMIN_EMAIL = "yourclan@example.com";
+
+  document.getElementById('copyYear').textContent = new Date().getFullYear();
+
+  // Отправка краткой заявки: делаем mailto и сохраняем в localStorage
+  function submitQuick(){
+    const nick = document.getElementById('qNick').value.trim();
+    const role = document.getElementById('qRole').value;
+    const profile = document.getElementById('qProfile').value.trim();
+    if(!nick) return false;
+    const subj = encodeURIComponent('Заявка в клан (быстрая) — ' + nick);
+    const body = encodeURIComponent(`Ник: ${nick}\nРоль: ${role}\nПрофиль: ${profile}`);
+    // mailto
+    location.href = `mailto:${ADMIN_EMAIL}?subject=${subj}&body=${body}`;
+    // save locally
+    saveApp({time:Date.now(),nick,role,profile,type:'quick'});
+    alert('Заявка открыта в почтовом клиенте. Либо сохранена локально.');
+    return false;
+  }
+
+  function submitFull(){
+    const nick = document.getElementById('fNick').value.trim();
+    if(!nick) return false;
+    const age = document.getElementById('fAge').value;
+    const role = document.getElementById('fRole').value;
+    const about = document.getElementById('fAbout').value;
+    const profile = document.getElementById('fProfile').value;
+    const subj = encodeURIComponent('Заявка в клан — ' + nick);
+    const body = encodeURIComponent(`Ник: ${nick}\nВозраст: ${age}\nРоль: ${role}\nО себе: ${about}\nПрофиль: ${profile}`);
+    location.href = `mailto:${ADMIN_EMAIL}?subject=${subj}&body=${body}`;
+    saveApp({time:Date.now(),nick,age,role,about,profile,type:'full'});
+    alert('Полная заявка: открылся почтовый клиент и сохранено локально.');
+    return false;
+  }
+
+  // Локальное хранилище заявок
+  function saveApp(obj){
+    const arr = JSON.parse(localStorage.getItem('standoff_apps')||'[]');
+    arr.unshift(obj);
+    localStorage.setItem('standoff_apps', JSON.stringify(arr));
+    updateSlotInfo();
+  }
+
+  function saveSample(){
+    saveApp({time:Date.now(),nick:'TestPlayer',role:'Rusher',profile:'https://example',type:'quick'});
+    alert('Сохранено локально (для демонстрации). Вход: "войти" -> admin.html');
+  }
+
+  function updateSlotInfo(){
+    const arr = JSON.parse(localStorage.getItem('standoff_apps')||'[]');
+    const count = arr.length;
+    const max = 50;
+    document.getElementById('slotInfo').textContent = `Набор открыт — ${count}/${max} слотов`;
+  }
+  updateSlotInfo();
+
+  function downloadApps(){
+    const arr = JSON.parse(localStorage.getItem('standoff_apps')||'[]');
+    const blob = new Blob([JSON.stringify(arr, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'standoff_apps.json'; document.body.appendChild(a); a.click();
+    a.remove(); URL.revokeObjectURL(url);
+  }
+
+  // Настраиваем начальные данные в админке (если пусто)
+  if(!localStorage.getItem('standoff_settings')){
+    const defaultSettings = {
+      heroTitle: "Вступай в наш клан Standoff 2",
+      heroText: "Мы — дружная команда. Тренировки, турниры, команды по ролям.",
+      aboutText: "Мы собираем игроков разного уровня: от новичков до про.",
+      rules: ["Уважать товарищей и админов.","Не использовать читы.","Активность — минимум 2 тренировки в месяц."],
+      gallery: [
+        "https://via.placeholder.com/600x400?text=Match+1",
+        "https://via.placeholder.com/600x400?text=Match+2",
+        "https://via.placeholder.com/600x400?text=Training"
+      ],
+      slotsMax:50,
+      nextEvent:"Ближайшая тренировка: чт, 21:00 (по МСК)"
+    };
+    localStorage.setItem('standoff_settings', JSON.stringify(defaultSettings));
+  }
+
+  // Загружаем настройки и применяем содержимое
+  function applySettingsToPage(){
+    const s = JSON.parse(localStorage.getItem('standoff_settings'));
+    if(!s) return;
+    document.getElementById('heroTitle').textContent = s.heroTitle;
+    document.getElementById('heroText').textContent = s.heroText;
+    document.getElementById('aboutText').textContent = s.aboutText;
+    document.getElementById('nextEvent').textContent = s.nextEvent || '';
+    // rules
+    const rl = document.getElementById('rulesList'); rl.innerHTML = '';
+    (s.rules||[]).forEach(r=>{ const li=document.createElement('li'); li.textContent=r; rl.appendChild(li);});
+    // gallery
+    const gg = document.getElementById('galleryGrid'); gg.innerHTML = '';
+    (s.gallery||[]).forEach(u=>{
+      const img = document.createElement('img'); img.src=u; gg.appendChild(img);
+    });
+    updateSlotInfo();
+  }
+  applySettingsToPage();
+</script>
+</body>
+</html><!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin — Standoff Clan</title>
+  <style>
+    body{font-family:Inter,system-ui,Arial;background:#071025;color:#eaf2ff;padding:20px}
+    .box{max-width:900px;margin:18px auto;padding:18px;border-radius:10px;background:linear-gradient(180deg,#0b1220,#07101a);box-shadow:0 8px 30px rgba(0,0,0,.6)}
+    h2{margin:0 0 12px}
+    label{display:block;margin-top:10px;color:#9fb0c8}
+    input,textarea,button{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    .row{display:flex;gap:10px}
+    .col{flex:1}
+    .small{max-width:160px}
+    .muted{color:#7f98ab;font-size:13px}
+    .list{background:#071427;padding:10px;border-radius:8px;margin-top:10px;max-height:300px;overflow:auto}
+    .app{padding:8px;border-bottom:1px solid rgba(255,255,255,0.02)}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Панель администратора</h2>
+    <div id="loginArea">
+      <p class="muted">Чтобы войти, введи пароль администратора.</p>
+      <label>Пароль</label>
+      <input id="pw" type="password" placeholder="Введите пароль">
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button onclick="doLogin()">Войти</button>
+        <button onclick="setupSample()" style="background:transparent;border:1px solid rgba(255,255,255,0.06)">Использовать демонстрацию</button>
+      </div>
+      <p class="muted">Примечание: это клиентская защита. Для реальной приватности используй .htaccess (Apache) или Cloudflare Access / Netlify Identity.</p>
+    </div>
+
+    <div id="adminArea" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <strong>Добро пожаловать, админ</strong>
+          <div class="muted">Здесь ты можешь редактировать тексты, правила, галерею и просматривать заявки</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button onclick="exportSettings()">Экспорт настроек</button>
+          <button onclick="logout()" style="background:transparent;border:1px solid rgba(255,255,255,0.06)">Выйти</button>
+        </div>
+      </div>
+
+      <section style="margin-top:14px">
+        <h3>Главный блок</h3>
+        <label>Заголовок (hero)</label>
+        <input id="heroTitle">
+        <label>Текст (hero)</label>
+        <textarea id="heroText" rows="3"></textarea>
+        <label>Текст "О клане"</label>
+        <textarea id="aboutText" rows="3"></textarea>
+        <label>Инфо о ближайшем событии</label>
+        <input id="nextEvent">
+        <div style="margin-top:10px"><button onclick="saveSettings()">Сохранить</button></div>
+      </section>
+
+      <section style="margin-top:14px">
+        <h3>Правила</h3>
+        <div id="rulesEditor"></div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <input id="newRule" placeholder="Новая строка правила">
+          <button onclick="addRule()">Добавить</button>
+        </div>
+      </section>
+
+      <section style="margin-top:14px">
+        <h3>Галерея (URL картинок)</h3>
+        <div id="galleryEditor"></div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <input id="newImg" placeholder="https://...">
+          <button onclick="addImg()">Добавить</button>
+        </div>
+      </section>
+
+      <section style="margin-top:14px">
+        <h3>Заявки (локальные)</h3>
+        <div style="display:flex;gap:8px">
+          <button onclick="loadApps()">Обновить список</button>
+          <button onclick="downloadApps()">Скачать JSON</button>
+          <button onclick="clearApps()" style="background:transparent;border:1px solid rgba(255,255,255,0.06)">Очистить локально</button>
+        </div>
+        <div class="list" id="appsList"></div>
+      </section>
+    </div>
+  </div>
+
+<script>
+  // ВАЖНО: это клиентский пароль — для рекламы/пробы хватает.
+  // По умолчанию пароль = "supersecret" (хэш ниже). Замени на свой или настрой серверную аутентификацию.
+  const pwHash = "b2fdc9c3c4cf7a839fdc84f9f7c4a94c0b1dbb6e0c0c3b0c9a1d8a6f2b6a1f3b"; // SHA-256("supersecret")
+  // Если хочешь сменить пароль локально: открой консоль и выполни setCustomHash(hex), затем refresh.
+
+  async function sha256Hex(str){
+    const enc = new TextEncoder();
+    const data = enc.encode(str);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    const h = Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    return h;
+  }
+
+  async function doLogin(){
+    const v = document.getElementById('pw').value;
+    const h = await sha256Hex(v);
+    if(h === pwHash){
+      document.getElementById('loginArea').style.display='none';
+      document.getElementById('adminArea').style.display='block';
+      loadSettingsToAdmin();
+      loadApps();
+    } else {
+      alert('Неверный пароль');
+    }
+  }
+
+  function logout(){
+    document.getElementById('adminArea').style.display='none';
+    document.getElementById('loginArea').style.display='block';
+    document.getElementById('pw').value='';
+  }
+
+  // Настройки
+  function getSettings(){ return JSON.parse(localStorage.getItem('standoff_settings')||'null');}
+  function saveSettings(){
+    const s = getSettings() || {};
+    s.heroTitle = document.getElementById('heroTitle').value;
+    s.heroText = document.getElementById('heroText').value;
+    s.aboutText = document.getElementById('aboutText').value;
+    s.nextEvent = document.getElementById('nextEvent').value;
+    localStorage.setItem('standoff_settings', JSON.stringify(s));
+    alert('Сохранено. Обнови public страницу, чтобы увидеть изменения.');
+  }
+
+  function loadSettingsToAdmin(){
+    const s = getSettings();
+    if(!s) return;
+    document.getElementById('heroTitle').value = s.heroTitle || '';
+    document.getElementById('heroText').value = s.heroText || '';
+    document.getElementById('aboutText').value = s.aboutText || '';
+    document.getElementById('nextEvent').value = s.nextEvent || '';
+    renderRules();
+    renderGallery();
+  }
+
+  // Rules editor
+  function renderRules(){
+    const s = getSettings() || {};
+    const arr = s.rules || [];
+    const el = document.getElementById('rulesEditor'); el.innerHTML='';
+    arr.forEach((r,i)=>{
+      const div = document.createElement('div');
+      div.style.display='flex'; div.style.gap='8px'; div.style.marginTop='6px';
+      const inp = document.createElement('input'); inp.value = r; inp.style.flex='1';
+      const btnDel = document.createElement('button'); btnDel.textContent='Удалить'; btnDel.onclick = ()=>{
+        arr.splice(i,1); s.rules = arr; localStorage.setItem('standoff_settings', JSON.stringify(s)); renderRules();
+      };
+      inp.onchange = ()=>{ arr[i]=inp.value; s.rules = arr; localStorage.setItem('standoff_settings', JSON.stringify(s)); };
+      div.appendChild(inp); div.appendChild(btnDel);
+      el.appendChild(div);
+    });
+  }
+  function addRule(){
+    const v = document.getElementById('newRule').value.trim(); if(!v) return;
+    const s = getSettings()||{}; s.rules = s.rules||[]; s.rules.push(v); localStorage.setItem('standoff_settings', JSON.stringify(s));
+    document.getElementById('newRule').value=''; renderRules();
+  }
+
+  // Gallery editor
+  function renderGallery(){
+    const s = getSettings() || {}; const arr = s.gallery || [];
+    const el = document.getElementById('galleryEditor'); el.innerHTML='';
+    arr.forEach((u,i)=>{
+      const div = document.createElement('div'); div.style.display='flex'; div.style.gap='8px'; div.style.marginTop='6px';
+      const inp = document.createElement('input'); inp.value = u; inp.style.flex='1';
+      const btnDel = document.createElement('button'); btnDel.textContent='Удалить'; btnDel.onclick = ()=>{
+        arr.splice(i,1); s.gallery = arr; localStorage.setItem('standoff_settings', JSON.stringify(s)); renderGallery();
+      };
+      inp.onchange = ()=>{ arr[i]=inp.value; s.gallery = arr; localStorage.setItem('standoff_settings', JSON.stringify(s)); };
+      div.appendChild(inp); div.appendChild(btnDel);
+      el.appendChild(div);
+    });
+  }
+  function addImg(){
+    const v = document.getElementById('newImg').value.trim(); if(!v) return;
+    const s = getSettings()||{}; s.gallery = s.gallery||[]; s.gallery.push(v); localStorage.setItem('standoff_settings', JSON.stringify(s));
+    document.getElementById('newImg').value=''; renderGallery();
+  }
+
+  // Заявки
+  function loadApps(){
+    const arr = JSON.parse(localStorage.getItem('standoff_apps')||'[]');
+    const el = document.getElementById('appsList'); el.innerHTML='';
+    if(arr.length===0) el.innerHTML = '<div class="muted">Заявок пока нет</div>';
+    arr.forEach(a=>{
+      const d = document.createElement('div'); d.className='app';
+      const date = new Date(a.time||Date.now()).toLocaleString();
+      d.innerHTML = `<strong>${a.nick||'—'}</strong> <span class="muted">[${a.type}]</span> — <span class="muted">${date}</span><div class="muted">${a.role||''} ${a.age?('• '+a.age):''}</div><div style="margin-top:6px">${(a.about||'').substring(0,240)}</div><div style="margin-top:6px;color:#9fb0c8">${a.profile||''}</div>`;
+      el.appendChild(d);
+    });
+  }
+  function downloadApps(){
+    const arr = JSON.parse(localStorage.getItem('standoff_apps')||'[]');
+    const blob = new Blob([JSON.stringify(arr, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'standoff_apps.json'; document.body.appendChild(a); a.click();
+    a.remove(); URL.revokeObjectURL(url);
+  }
+  function clearApps(){
+    if(!confirm('Очистить все локальные заявки?')) return;
+    localStorage.removeItem('standoff_apps'); loadApps(); alert('Локальные заявки удалены');
+  }
+
+  // Экспорт настроек
+  function exportSettings(){
+    const s = getSettings()||{};
+    const blob = new Blob([JSON.stringify(s, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href=url; a.download='standoff_settings.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  }
+
+  // Установить демонстрационные данные (для удобства)
+  function setupSample(){
+    const sample = {
+      heroTitle: "Вступай в наш клан Standoff 2",
+      heroText: "Хочешь играть в команде и прокачиваться? Мы ждем тебя!",
+      aboutText: "Команда активных игроков, тренеров и турниров.",
+      rules: ["Уважать команду","Без читов","Активность 2+ раз/мес"],
+      gallery: [
+        "https://via.placeholder.com/600x400?text=Demo1",
+        "https://via.placeholder.com/600x400?text=Demo2"
+      ],
+      nextEvent: "Тренировка: вс, 19:00 (МСК)"
+    };
+    localStorage.setItem('standoff_settings', JSON.stringify(sample));
+    localStorage.setItem('standoff_apps', JSON.stringify([
+      {time:Date.now(),nick:'DemoPlayer',role:'AWPer',about:'Хочу в клан',profile:'https://example',type:'full'}
+    ]));
+    alert('Демонстрация установлена. Войдите паролем "supersecret"');
+  }
+
+  // Хелпер: смена хэша в консоли (не для обычных пользователей)
+  window.setCustomHash = function(hex){
+    console.warn('Установлен новый хэш пароля для текущего браузера. Перезагрузите страницу.');
+    // не сохраняем в коде; просто переопределяем переменную pwHash
+    window.pwHashOverride = hex;
+  }
+  // если установлен pwHashOverride — используем его
+  (function checkOverride(){ if(window.pwHashOverride) pwHash = window.pwHashOverride; })();
+</script>
+</body>
+</html>
+
